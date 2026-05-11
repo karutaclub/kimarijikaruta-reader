@@ -660,6 +660,11 @@
       queue = d.poems
         .map((poemNumber) => POEMS.find((poem) => poem.n === poemNumber))
         .filter(Boolean);
+      // Fisher-Yatesシャッフルでランダム順にする
+      for (let i = queue.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [queue[i], queue[j]] = [queue[j], queue[i]];
+      }
     }
 
     function setTransportState() {
@@ -965,7 +970,7 @@
       nameTargets.forEach((t) => { t.textContent = detail.name; });
 
       playerTitle.textContent = `${detail.name}を再生`;
-      playerCopy.textContent = `公式セット分けに合わせた25首を、セット内の順番で読み上げます。`;
+      playerCopy.textContent = `公式セット分けに合わせた25首を、ランダムな順番で読み上げます。`;
       if (setPicker) setPicker.open = false;
 
       try { window.localStorage.setItem("kimarijiSelectedSet", selectedSet); } catch(_) {}
